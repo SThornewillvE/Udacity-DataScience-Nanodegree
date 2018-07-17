@@ -23,7 +23,7 @@ Learning Material Files:
 * Folders containing code implementations
 
 Project Files:
-* (More information to come)
+* Note that for `02_deep-learning_project` the notebooks were written in an GPU enabled workspace. Hence, this file will only work if CUDA is installed on your PC.
 
 ## References and Citations
 When using other repositories and resources, I'll make sure to take note of it here.
