@@ -32,7 +32,8 @@ The research directory stores the paper that did the original fit using SVMs as 
 
 ## Awknowledgements
 
-Data can be found in the [UCI ML repo](https://archive.ics.uci.edu/ml/datasets/Forest+Fires). 
+Data can be found in the [UCI ML repo](https://archive.ics.uci.edu/ml/datasets/Forest+Fires), there is also a 
+[Kaggle](https://www.kaggle.com/elikplim/forest-fires-data-set) page for this set.
 
 Citation: [Cortez and Morais, 2007] P. Cortez and A. Morais. A Data Mining Approach to Predict Forest Fires using Meteorological Data. In J. Neves, M. 
 F. Santos and J. Machado Eds., New Trends in Artificial Intelligence, Proceedings of the 13th EPIA 2007 - Portuguese Conference on Artificial 
