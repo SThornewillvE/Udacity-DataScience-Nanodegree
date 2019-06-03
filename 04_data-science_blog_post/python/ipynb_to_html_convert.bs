@@ -1,0 +1,13 @@
+#! /c/Users/sthornewillvonessen/Documents/Projects/2018-11/empire_AB-test_2018-11-02/python
+
+# Remove files with the html extension
+rm -r *.html
+
+# Change jupyter theme
+jt -r
+
+# Convert notebook
+jupyter nbconvert --to html *.ipynb
+
+# Change theme back to desired format
+jt -t solarizedd -f ubuntu
