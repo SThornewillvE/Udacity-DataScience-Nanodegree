@@ -65,6 +65,12 @@ def clean_data(df):
     # drop duplicates
     df = df.drop_duplicates()
     
+    # Drop `child_alone` column
+    df = df.drop(labels=["child_alone"], axis=1)
+    
+    # Change 2s in `related` to 1s
+    df["related"] = df["related"].apply(lambda x: 1 if x > 0 else 0)
+    
     return df
 
     
@@ -88,8 +94,8 @@ def main():
 
         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
 
-        print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
-              .format(messages_filepath, categories_filepath))
+        print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'.format(messages_filepath, 
+                                                                             categories_filepath))
         df = load_data(messages_filepath, categories_filepath)
 
         print('Cleaning data...')
