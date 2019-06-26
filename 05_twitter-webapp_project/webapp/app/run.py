@@ -2,7 +2,10 @@ import json
 import plotly
 import pandas as pd
 import joblib
+import operator
+import re
 
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
@@ -14,14 +17,31 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
+# Update tokenize function
 def tokenize(text):
+    """
+    Normalizes, tokenizes and lemms text
+    
+    :Input:
+        :text: String, tweet from a supposed natural disaster event
+    :Returns:
+        :clean_tokens: List of strings, tokenized and cleaned form of the message
+    """
+    
+    # Normalise by setting to lowercase
+    text = text.lower()
+    
+    # Remove punctuation
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text)
+    
+    # Create tokens 
     tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
+    
+    # Remove stopwords
+    tokens = [w for w in tokens if w not in stopwords.words("english")]
+    
+    # Lemmatise words
+    clean_tokens = [WordNetLemmatizer().lemmatize(w) for w in tokens]
 
     return clean_tokens
 
@@ -43,12 +63,20 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # Get most appearing categories
+    category_names = list(df.iloc[:, 3:].sum().sort_values(ascending=False).index)
+    category_counts = list(df.iloc[:, 3:].sum().sort_values(ascending=False).values)
+    
+    # Get top 10 tokens             
+    sorted_d = joblib.load("sorted_d.pkl")
+    
+    token_names = [x[0] for x in sorted_d[-10:]]
+    token_counts = [x[1] for x in sorted_d[-10:]]
+    
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
         {
             'data': [
@@ -67,7 +95,46 @@ def index():
                     'title': "Genre"
                 }
             }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+       
+        {
+            'data': [
+                Bar(
+                    x=token_names,
+                    y=token_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 10 Tokens',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Tokens"
+                }
+            }
         }
+       
     ]
     
     # encode plotly graphs in JSON
@@ -76,7 +143,6 @@ def index():
     
     # render web page with plotly graphs
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
-
 
 # web page that handles user query and displays model results
 @app.route('/go')
