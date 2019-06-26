@@ -1,29 +1,31 @@
-# Data Science Nanodegree Project 5: Disaster Response Pipeline Webapp
-
-Author: Simon Thornewill von Essen
-
-Start Date: 2019-06-22
+# Data Science Nanodegree Repository
 
 ## Description
+"Data scientists interpret, extrapolate from, and prescribe from data to deliver actionable recommendations."
+- [Udacity](https://eu.udacity.com/course/data-scientist-nanodegree--nd025)
 
-When natural disasters happen, people use twitter to try and get help. However, not all tweets are natural disaster tweets and there isn't a simple way to use key words in order to identify these kinds of texts.
+## Important files and Notes
+The Data Science Nanodegree is split into 6 sections each with their own lecture materials and projects:
 
-Towards this end, the task is to create a machine learning webapp that is able to take tweets and discern whether they are relevant for a disaster response team or not using data that has already been labeled.
+1. Supervised Learning
+2. Deep Learning
+3. Unsupervised Learning
+4. Solving Data Science Problems
+5. Software Engineering for Data Scientists (No assocaited project)
+6. Data Engineering for Data Scientists
+7. Experimental Design and Recommendation Systems
+8. Capstone Project
 
-There are three steps:
+Hence, I have broken up the files numerically according to this order.
 
-1. Create an ETL which cleans the Data
-2. Create a ML pipeline which performs feature extraction and trains a model
-3. Take model and embed it into a webapp
+Learning Material Files:
+* Lecture notes as GIMP xcf files
+* Folders containing code implementations
 
-## Repo Layout
+Project Files:
+* Note that for `02_deep-learning_project` the notebooks were written in an GPU enabled workspace. Hence, this file will only work if CUDA is installed on your PC.
 
-* To update after project completion
+## References and Citations
+When using other repositories and resources, I'll make sure to take note of it here.
 
-## Packages Used
-
-* To update after project completion
-
-## Acknowledgements
-
-* To update after project completion
+* N/A
