@@ -1,31 +1,41 @@
-# Data Science Nanodegree Repository
+# Data Science Nanodegree Project 5: Disaster Response Pipeline Webapp
+
+Author: Simon Thornewill von Essen
+
+Start Date: 2019-06-22
 
 ## Description
-"Data scientists interpret, extrapolate from, and prescribe from data to deliver actionable recommendations."
-- [Udacity](https://eu.udacity.com/course/data-scientist-nanodegree--nd025)
 
-## Important files and Notes
-The Data Science Nanodegree is split into 6 sections each with their own lecture materials and projects:
+When natural disasters happen, people use twitter to try and get help. However, not all tweets are natural disaster tweets and there isn't a simple way to use key words in order to identify these kinds of texts.
 
-1. Supervised Learning
-2. Deep Learning
-3. Unsupervised Learning
-4. Solving Data Science Problems
-5. Software Engineering for Data Scientists (No assocaited project)
-6. Data Engineering for Data Scientists
-7. Experimental Design and Recommendation Systems
-8. Capstone Project
+Towards this end, the task is to create a machine learning webapp that is able to take tweets and discern whether they are relevant for a disaster response team or not using data that has already been labeled.
 
-Hence, I have broken up the files numerically according to this order.
+There are three steps:
 
-Learning Material Files:
-* Lecture notes as GIMP xcf files
-* Folders containing code implementations
+1. Create an ETL which cleans the Data
+2. Create a ML pipeline which performs feature extraction and trains a model
+3. Take model and embed it into a webapp
 
-Project Files:
-* Note that for `02_deep-learning_project` the notebooks were written in an GPU enabled workspace. Hence, this file will only work if CUDA is installed on your PC.
+## Repo Layout
 
-## References and Citations
-When using other repositories and resources, I'll make sure to take note of it here.
+This repo is split into subdirectories:
 
-* N/A
+1. `data-processing_and_model-training` - Contains notebooks, python files and other such files for ML Engineering purposes
+2. `webapp` - Contains webapp for deployment, see README inside this directory for more instructions
+
+## Packages Used
+
+* `sys`
+* `pandas`
+* `sqlalchemy`
+* `joblib`
+* `re`
+* `nltk`
+* `sklearn`
+* `json`
+* `plotly`
+* `flask`
+
+## Acknowledgements
+
+* Special thanks to @wenshihao1993, without whom I would have had a lot more trouble getting the python pipeline to work.
