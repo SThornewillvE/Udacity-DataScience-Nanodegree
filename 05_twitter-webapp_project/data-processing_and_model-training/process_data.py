@@ -61,15 +61,29 @@ def clean_data(df):
     
     # concatenate the original dataframe with the new `categories` dataframe
     df = df.join(categories)
-    
+
     # drop duplicates
     df = df.drop_duplicates()
     
-    # Drop `child_alone` column
-    df = df.drop(labels=["child_alone"], axis=1)
+    # check dummy vars
+    dummy_vars_dict = {}
     
-    # Change 2s in `related` to 1s
-    df["related"] = df["related"].apply(lambda x: 1 if x > 0 else 0)
+    for i in df.columns[3:]:
+        dummy_vars_dict[i] = list(df[i].unique())
+    
+    for i in dummy_vars_dict:
+        
+        # Drop columns that have only one value
+        if len(dummy_vars_dict[i]) == 1:
+            df = df.drop(labels=[i], axis=1)
+            
+        # Turn non dummy variables into dummy variables
+        elif len(dummy_vars_dict[i]) > 2:
+            df[i] = df[i].apply(lambda x: 1 if x > 0 else 0)
+        
+        # Leave column alone otherwise
+        else:
+            continue
     
     return df
 
