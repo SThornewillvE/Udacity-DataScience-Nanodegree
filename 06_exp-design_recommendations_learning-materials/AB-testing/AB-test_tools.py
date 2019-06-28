@@ -44,7 +44,7 @@ def calculate_Pvalue(p, n_obs, n_occur, tails):
     return z_score, p_value
 
 
-def simulate_Pvalue(p, n_obs, n_occur, n_trials=200_000):
+def simulate_Pvalue(p, n_obs, n_occur, n_trials=5_000):
     """
     Simulates Z-score and P-value given a null hypothesis, number of observations
     and number of occurances of a target variable.
@@ -95,7 +95,7 @@ def calculate_Pvalue_test(p, n_control, n_exp, p_control, p_exp):
     return z_score, p_value
 
 
-def simulate_Pvalue_test(p, n_control, n_exp, p_control, p_exp, n_trials=200_000):
+def simulate_Pvalue_test(p, n_control, n_exp, p_control, p_exp, n_trials=5_000):
     """
     Calculates the Z-score and P-values for two outcomes in an experiment.
     
@@ -121,6 +121,59 @@ def simulate_Pvalue_test(p, n_control, n_exp, p_control, p_exp, n_trials=200_000
     p_value = (samples >= (p_exp - p_control)).mean()
 
     return p_value
+
+
+def calculate_power(p_null, p_alt, n, alpha=0.05):
+    """
+    Compute power of detecting difference in two populations with different proportion parameters with
+    given alpha rate.
+    
+    :Input:
+        :p_null: Rate of success under the null hypothesis
+        :p_alt: Desired rate of success under the alternative hypothesis
+        :n: Sample size
+        :alpha: Desired significance level (i.e. Type 1 Error Rate)
+    :Returns:
+        :power: 1 - beta
+    """
+
+    se_null = np.sqrt((p_null*(1-p_null) + p_null*(1-p_null)) / n)
+    null_dist = stats.norm(loc = 0, scale = se_null)
+    p_crit = null_dist.ppf(1 - alpha)
+
+    se_alt  = np.sqrt((p_null*(1-p_null) + p_alt*(1-p_alt)) / n)
+    alt_dist = stats.norm(loc = p_alt - p_null, scale = se_alt)
+    beta = alt_dist.cdf(p_crit)
+
+    power = 1 - beta
+    
+    return power
+
+
+def find_experiment_size(p_null, p_alt, alpha = .05, beta = .20):
+    """
+    Calculate min number of samples requried to achieve a desired power level for a given effect size.
+    
+    :Input:
+        :p_null: Rate of success under the null hypothesis
+        :p_alt: Desired rate of success under the alternative hypothesis
+        :alpha: Desired significance level (i.e. Type 1 Error Rate)
+        :beta: Desired 1 - power (i.e. Type 2 Error Rate)
+    :Returns:
+        :n: Sample size
+    """
+
+    # Get necessary z-scores and standard deviations (@ 1 obs per group)
+    z_null = stats.norm.ppf(1 - alpha)
+    z_alt  = stats.norm.ppf(beta)
+    sd_null = np.sqrt(p_null * (1-p_null) + p_null * (1-p_null))
+    sd_alt  = np.sqrt(p_null * (1-p_null) + p_alt  * (1-p_alt) )
+    
+    # Compute and return minimum sample size
+    p_diff = p_alt - p_null
+    n = ((z_null*sd_null - z_alt*sd_alt) / p_diff) ** 2
+    
+    return np.ceil(n)
 
 
 def Main():
