@@ -6,16 +6,22 @@ Data: 2019-07-14
 
 ## Description
 
-To be completed
+Predict user churn for a music streaming serivce, "sparkify".
+
+Blog post for this project can be found here. (TODO: Add blog post here.)
 
 ## Repo Layout
 
-To be completed
+The repo layout in this instance is relatively simple. The work done can be found in the jupyter notebook. The json file which contains the data was a little too big to commit and so I have ommitted it.
 
 ## Packages Used
 
-To be completed
+* `pyspark`
+* `time`
+* `matplotlib`
+* `numpy`
+* `pandas`
 
 ## Acknowledgements
 
-To be completed
+N/A
