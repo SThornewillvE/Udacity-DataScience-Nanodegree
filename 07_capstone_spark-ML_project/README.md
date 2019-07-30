@@ -8,7 +8,7 @@ Data: 2019-07-14
 
 Predict user churn for a music streaming serivce, "sparkify".
 
-Blog post for this project can be found here. (TODO: Add blog post here.)
+Blog post for this project can be found [here](https://medium.com/@sthornewillve/writing-lighting-fast-code-with-spark-4375a244d128).
 
 ## Repo Layout
 
